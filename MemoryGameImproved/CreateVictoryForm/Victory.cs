@@ -1,10 +1,4 @@
-﻿//--------------------------------------------------------------------
-// <copyright file="Victory.cs" company="Company Name">
-//    Copyright message. 
-// <author>Scot LaFargue</author>
-// </copyright>
-//--------------------------------------------------------------------
-namespace MemoryGameImproved.CreateVictoryForm
+﻿namespace MemoryGameImproved.CreateVictoryForm
 {
     using System;
     using System.Drawing;
@@ -16,18 +10,12 @@ namespace MemoryGameImproved.CreateVictoryForm
     public partial class Victory : Form
     {
         /// <summary>
-        /// Current game info.
-        /// </summary>
-        private GameInfo gameInfo;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="Victory"/> class. 
         /// </summary>
         /// <param name="info">Current game info</param>
-        public Victory(GameInfo info)
+        public Victory()
         {
             this.InitializeComponent();
-            this.gameInfo = info;
         }
 
         /// <summary>
@@ -65,7 +53,7 @@ namespace MemoryGameImproved.CreateVictoryForm
 
             // Must set text before calling position functions
             lblVictoryTitle.Text = "Level Complete!";
-            lblVictoryText.Text = "Score: " + this.gameInfo.Score + "\n Time: " + gameInfo.TotalTime.ToString("F1") + "\n Total Clicks: " + this.gameInfo.TotalClicks;
+            lblVictoryText.Text = "Score: " + GameInfo.Instance.Score + "\n Time: " + GameInfo.Instance.TotalTime.ToString("N") + "\n Total Clicks: " + GameInfo.Instance.TotalClicks;
             btnContinue.Text = "Continue";
 
             lblGrayBackground.AutoSize = false;

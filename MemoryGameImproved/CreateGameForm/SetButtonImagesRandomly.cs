@@ -1,10 +1,4 @@
-﻿//--------------------------------------------------------------------
-// <copyright file="SetButtonImagesRandomly.cs" company="Company Name">
-//    Copyright message. 
-// <author>Scot LaFargue</author>
-// </copyright>
-//--------------------------------------------------------------------
-namespace MemoryGameImproved.CreateGameForm
+﻿namespace MemoryGameImproved.CreateGameForm
 {
     using System;
     using System.Collections.Generic;
@@ -19,20 +13,19 @@ namespace MemoryGameImproved.CreateGameForm
         /// Sets images systematically in an randomized list of indexes
         /// </summary>
         /// <param name="buttonList">List of buttons to assign images to</param>
-        /// <param name="gameInfo">Current game info</param>
-        public static void RandomizeImages(List<Button> buttonList, GameInfo gameInfo)
+        public static void RandomizeImages(List<Button> buttonList)
         {
-            int size = gameInfo.GetSize();
-            List<int> tiles = CreateListOfRandomIndexes(gameInfo);
+            int size = GameInfo.Instance.GetSize();
+            List<int> tiles = CreateListOfRandomIndexes();
 
             for (int i = 0; i < size;)
             {
-                for (int f = 0; f < gameInfo.LevelPlus1 && i < size; ++f)
+                for (int f = 0; f < GameInfo.Instance.LevelPlus1 && i < size; ++f)
                 {
                     // Assigns image to int contained in the randomized index list
                     int index = tiles[i];
 
-                    buttonList[index].BackgroundImage = gameInfo.ImageList[f];
+                    buttonList[index].BackgroundImage = GameInfo.Instance.ImageList[f];
                     buttonList[index].BackgroundImageLayout = ImageLayout.Stretch;
                     ++i;
                 }
@@ -44,9 +37,9 @@ namespace MemoryGameImproved.CreateGameForm
         /// </summary>
         /// <param name="info">Current game info</param>
         /// <returns>List of randomized indexes</returns>
-        private static List<int> CreateListOfRandomIndexes(GameInfo info)
+        private static List<int> CreateListOfRandomIndexes()
         {
-            int size = info.GetSize();
+            int size = GameInfo.Instance.GetSize();
             Random rand = new Random();
 
             // Create list of indexes

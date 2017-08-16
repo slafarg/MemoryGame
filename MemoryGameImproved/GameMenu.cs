@@ -1,10 +1,4 @@
-﻿//--------------------------------------------------------------------
-// <copyright file="GameMenu.cs" company="Company Name">
-//    Copyright message. 
-// <author>Scot LaFargue</author>
-// </copyright>
-//--------------------------------------------------------------------
-namespace MemoryGameImproved
+﻿namespace MemoryGameImproved
 {
     using System;
     using System.Media;
@@ -14,12 +8,7 @@ namespace MemoryGameImproved
     /// Game Menu.
     /// </summary>
     public partial class GameMenu : Form
-    {        
-        /// <summary>
-        /// Current game info.
-        /// </summary>
-        private GameInfo gameInfo = new GameInfo();  
-        
+    {
         /// <summary>
         /// Background music.
         /// </summary>                   
@@ -66,7 +55,7 @@ namespace MemoryGameImproved
                 else
                 {
                     // Saving valid playerID for scoreboard
-                    this.gameInfo.PlayerID = this.txtPlayerID.Text;
+                    GameInfo.Instance.PlayerID = this.txtPlayerID.Text;
 
                     // Removing visibility of login boxes
                     this.lblPassword.Hide();
@@ -92,7 +81,7 @@ namespace MemoryGameImproved
         private void BtnNewGame_Click(object sender, EventArgs e)
         {
             // Reseting game
-            this.gameInfo.Reset();
+            GameInfo.Instance.Reset();
             this.btnContinue.Show();
             this.btnContinue.Select();
             this.BtnContinue_Click(this, EventArgs.Empty);
@@ -115,9 +104,9 @@ namespace MemoryGameImproved
         /// <param name="e">Empty event arguments</param>
         private void BtnContinue_Click(object sender, EventArgs e)
         {
-            this.gameInfo.LevelComplete = false;
+            GameInfo.Instance.LevelComplete = false;
             CreateGameForm.Gameboard attempt = new CreateGameForm.Gameboard();
-            attempt.CreateGameBoard(this.gameInfo);
+            attempt.CreateGameBoard();
             attempt.ShowDialog();
             this.btnContinue.Select();
         }

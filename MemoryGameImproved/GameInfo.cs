@@ -1,10 +1,4 @@
-﻿//--------------------------------------------------------------------
-// <copyright file="GameInfo.cs" company="Company Name">
-//    Copyright message. 
-// <author>Scot LaFargue</author>
-// </copyright>
-//--------------------------------------------------------------------
-namespace MemoryGameImproved
+﻿namespace MemoryGameImproved
 {    
     using System;
     using System.Collections.Generic;

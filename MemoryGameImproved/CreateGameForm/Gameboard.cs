@@ -1,10 +1,4 @@
-﻿//-------------------------------------------------------------
-// <copyright file="Gameboard.cs" company="Company Name">
-//    Copyright message. 
-// <author>Scot LaFargue</author>
-// </copyright>
-//-------------------------------------------------------------
-namespace MemoryGameImproved.CreateGameForm
+﻿namespace MemoryGameImproved.CreateGameForm
 {
     using System;
     using System.Collections.Generic;
@@ -22,14 +16,6 @@ namespace MemoryGameImproved.CreateGameForm
         const int totalTimeTimerInverval = 100;
 
         #region Get Sets
-        /// <summary>
-        /// Contains game info
-        /// </summary>
-        public GameInfo gameInfo
-        {
-            get;
-            set;
-        }
 
         /// <summary>
         /// List of buttons that will contain images
@@ -139,7 +125,6 @@ namespace MemoryGameImproved.CreateGameForm
         public Gameboard()
         {
             this.InitializeComponent();
-            gameInfo = new GameInfo();
             indexList = new List<int>();
             pairIndex = -1;
             revealed = 0;
@@ -154,13 +139,10 @@ namespace MemoryGameImproved.CreateGameForm
         /// <summary>
         /// Creates the level for Match Pair game.
         /// </summary>                        
-        public void CreateGameBoard(GameInfo info)
+        public void CreateGameBoard()
         {
             try
             {
-
-                //ReceiveData(info);
-
                 // Timer initialization            
                 this.clickDelayTimer.Interval = clickDelay;
                 this.clickDelayTimer.Tick += this.ClickDelay_Tick;
@@ -192,8 +174,8 @@ namespace MemoryGameImproved.CreateGameForm
                 buttonFrame.Height = (int)Math.Floor(0.75 * this.Height);
                 buttonFrame.Location = new Point((this.Width - this.buttonFrame.Width) / 2, (this.Height - this.buttonFrame.Height) / 2);
 
-                this.btnList = CreateButtons.SpawnButtonList(buttonFrame, this.gameInfo);
-                this.coverList = CreateButtons.SpawnButtonList(buttonFrame, this.gameInfo);
+                this.btnList = CreateButtons.SpawnButtonList(buttonFrame);
+                this.coverList = CreateButtons.SpawnButtonList(buttonFrame);
                 for (int i = 0; i < this.btnList.Count(); ++i)
                 {
                     this.coverList[i].Click += new EventHandler(this.RevealClick);
@@ -203,7 +185,7 @@ namespace MemoryGameImproved.CreateGameForm
                     this.coverList[i].BackColor = Color.Gray;
                 }
 
-                SetButtonImagesRandomly.RandomizeImages(this.btnList, this.gameInfo);
+                SetButtonImagesRandomly.RandomizeImages(this.btnList);
 
                 //Start timer as late as possible
                 this.totalTimeTimer.Enabled = true;
@@ -213,22 +195,6 @@ namespace MemoryGameImproved.CreateGameForm
                 throw new Exception("Unable to create level.", ex);
             };
         }
-
-        /// <summary>
-        /// Game board receives GameInfo class.
-        /// </summary>
-        /// <param name="info">Info for current game.</param>
-        //public void ReceiveData(GameInfo info)
-        //{
-        //    if (info != null)
-        //    {
-        //        this.gameInfo = info;
-        //    }
-        //    else
-        //    {
-        //        throw new ArgumentNullException("GameInfo object is cannot be null.");
-        //    }
-        //}
 
         /// <summary>
         /// Removes covers and detects if the buttons underneath
@@ -263,12 +229,12 @@ namespace MemoryGameImproved.CreateGameForm
                         this.revealed += 2;
 
                         // Test if all are revealed
-                        if (this.revealed == this.gameInfo.GetSize())
+                        if (this.revealed == GameInfo.Instance.GetSize())
                         {
                             // You won the level
                             totalTimeTimer.Enabled = false;
                             MessageBox.Show("You finished!");
-                            this.gameInfo.LevelComplete = true;
+                            GameInfo.Instance.LevelComplete = true;
                             this.ExitForm(this, EventArgs.Empty);
                         }
                     }
@@ -308,7 +274,7 @@ namespace MemoryGameImproved.CreateGameForm
             // All values are calculated based off current level data
             // Later it is added to gameInfo's values for a running total of data
             // Score handled here in case somebody leaves a game before completing level
-            this.score = Math.Floor((gameInfo.GetSize() - (totalClicks / (this.gameInfo.LevelPlus1 - Math.Floor(this.gameInfo.Level / 3d)))) * (revealed / 2) - totalTime);
+            this.score = Math.Floor((GameInfo.Instance.GetSize() - (totalClicks / (GameInfo.Instance.LevelPlus1 - Math.Floor(GameInfo.Instance.Level / 3d)))) * (revealed / 2) - totalTime);
         }
 
         /// <summary>
@@ -316,9 +282,9 @@ namespace MemoryGameImproved.CreateGameForm
         /// </summary>
         private void UpdateInfo()
         {
-            this.gameInfo.Score += this.score;
-            this.gameInfo.TotalClicks += this.totalClicks;
-            this.gameInfo.TotalTime += this.totalTime;
+            GameInfo.Instance.Score += this.score;
+            GameInfo.Instance.TotalClicks += this.totalClicks;
+            GameInfo.Instance.TotalTime += this.totalTime;
         }
 
         /// <summary>
@@ -332,19 +298,19 @@ namespace MemoryGameImproved.CreateGameForm
             UpdateInfo();
                
             // If you beat the final level (there is one more picture than there is the level
-            if (this.gameInfo.Level == (this.gameInfo.ImageList.Count() - 1) && this.gameInfo.LevelComplete == true)
+            if (GameInfo.Instance.Level == (GameInfo.Instance.ImageList.Count() - 1) && GameInfo.Instance.LevelComplete == true)
             {
                 // Create final score screen and update database
-                this.gameInfo.Reset();
+                GameInfo.Instance.Reset();
                 this.Close();
             }
-            else if (this.gameInfo.LevelComplete == true)
+            else if (GameInfo.Instance.LevelComplete == true)
             {
                 // If you beat a level that isn't the final level
-                CreateVictoryForm.Victory victoryForm = new CreateVictoryForm.Victory(this.gameInfo);
+                CreateVictoryForm.Victory victoryForm = new CreateVictoryForm.Victory();
                 victoryForm.CreateVictoryBoard();
                 victoryForm.ShowDialog();
-                ++this.gameInfo.Level;
+                ++GameInfo.Instance.Level;
                 this.Close();
             }
             else

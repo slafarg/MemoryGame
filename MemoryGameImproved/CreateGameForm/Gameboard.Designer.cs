@@ -1,11 +1,4 @@
-﻿//-------------------------------------------------------------
-// <copyright file="Gameboard.Designer.cs" company="Compan Name">
-//    Copyright message. 
-// <author>Scot LaFargue</author>
-// </copyright>
-//-------------------------------------------------------------
-
-namespace MemoryGameImproved.CreateGameForm
+﻿namespace MemoryGameImproved.CreateGameForm
 {
     /// <summary>
     /// Game board class
