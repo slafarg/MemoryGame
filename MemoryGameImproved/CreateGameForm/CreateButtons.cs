@@ -68,47 +68,19 @@
             // Add spacing distance for adjacent buttons to find X and Y positions.
             int btnHeightPlusSpacing = btnHeight + spacing;
             int btnWidthPlusSpacing = btnWidth + spacing;
-
             
-            //Starting at padding for button[0].
-            int xPos = frame.Location.X + padding, yPos = frame.Location.Y + padding;
             int index = 0;
-
-            int totalRows;
-            if(GameInfo.Instance.OddLevel)
+            for (int yPos = frame.Location.Y + padding; yPos <= frame.Location.Y + frame.Height; yPos += btnHeightPlusSpacing)
             {
-                totalRows = GameInfo.Instance.LevelPlus1 + 1;
-            }
-            else
-            {
-                totalRows = GameInfo.Instance.LevelPlus1;
-            }
-
-            for (int rowPos = 1; rowPos <= totalRows;)
-            {
-                for(int columnPos = 1; columnPos <= GameInfo.Instance.LevelPlus1; ++columnPos)
+                for (int xPos = frame.Location.X + padding; xPos <= frame.Location.X + frame.Width; xPos += btnWidthPlusSpacing)
                 {
-                    if (columnPos == 1)
+                    if (!(xPos == frame.Location.X + padding))
                     {
-                        // If beginning of Row start after the initial padding.
-                        xPos = frame.Location.X + padding;
-                        btnList[index].Location = new Point(xPos, yPos);
-                    }
-                    else if (columnPos != GameInfo.Instance.LevelPlus1)
-                    {
-                        //If not begining or end.
+                        // If not the beginning
                         xPos = btnList[index - 1].Location.X + btnWidthPlusSpacing;
-                        btnList[index].Location = new Point(xPos, yPos);
-                    }
-                    else
-                    {
-                        //If end, add button before yPos Increase
-                        xPos = btnList[index - 1].Location.X + btnWidthPlusSpacing;
-                        btnList[index].Location = new Point(xPos, yPos);                        
-                        yPos += btnHeightPlusSpacing;
-                        ++rowPos;
                     }
 
+                    btnList[index].Location = new Point(xPos, yPos);
                     ++index;
                 }
             }

@@ -14,6 +14,7 @@
     {
         const int clickDelay = 700;
         const int totalTimeTimerInverval = 100;
+        const double framePercentageSize = 0.75;
 
         #region Get Sets
 
@@ -137,58 +138,61 @@
         #endregion
 
         /// <summary>
-        /// Creates the level for Match Pair game.
+        /// Constructor creates the level for Match Pair game.
         /// </summary>                        
         public void CreateGameBoard()
         {
             try
             {
                 // Timer initialization            
-                this.clickDelayTimer.Interval = clickDelay;
-                this.clickDelayTimer.Tick += this.ClickDelay_Tick;
-                this.totalTimeTimer.Interval = totalTimeTimerInverval;
-                this.totalTimeTimer.Tick += this.TotalTime_Tick;
+                clickDelayTimer.Interval = clickDelay;
+                clickDelayTimer.Tick += ClickDelay_Tick;
+                totalTimeTimer.Interval = totalTimeTimerInverval;
+                totalTimeTimer.Tick += TotalTime_Tick;
 
-                // Setting form size to screen
+                // Setting form
                 this.Size = Screen.PrimaryScreen.Bounds.Size;
                 this.FormBorderStyle = FormBorderStyle.None;
                 this.WindowState = FormWindowState.Maximized;
-                //this.TopMost = true;
-
                 this.BackgroundImage = Properties.Resources.testrisContainer;
                 this.BackgroundImageLayout = ImageLayout.Stretch;
 
                 //Exit button
-                Button btnExit = new Button();
-                btnExit.Name = "btnExit";
+                Button btnExit = new Button()
+                {
+                    Name = "btnExit",
+                    BackColor = Color.FromArgb(0, Color.White),
+                    TabStop = false,
+                    FlatStyle = FlatStyle.Flat,
+                    Width = 1,
+                    Height = 1
+                };
                 btnExit.Click += new EventHandler(this.ExitForm);
-                btnExit.BackColor = Color.FromArgb(255, Color.White);
-                btnExit.TabStop = false;
-                btnExit.FlatStyle = FlatStyle.Flat;
                 btnExit.FlatAppearance.BorderSize = 0;
                 this.Controls.Add(btnExit);
                 this.CancelButton = btnExit;
 
-                //Create buttons
-                buttonFrame.Width = (int)Math.Floor(0.75 * this.Width);
-                buttonFrame.Height = (int)Math.Floor(0.75 * this.Height);
-                buttonFrame.Location = new Point((this.Width - this.buttonFrame.Width) / 2, (this.Height - this.buttonFrame.Height) / 2);
+                //Create frame to fit buttons in.
+                buttonFrame.Width = (int)Math.Floor(framePercentageSize * this.Width);
+                buttonFrame.Height = (int)Math.Floor(framePercentageSize * this.Height);
+                buttonFrame.Location = new Point((Width - buttonFrame.Width) / 2, (Height - buttonFrame.Height) / 2);
 
-                this.btnList = CreateButtons.SpawnButtonList(buttonFrame);
-                this.coverList = CreateButtons.SpawnButtonList(buttonFrame);
+                btnList = CreateButtons.SpawnButtonList(buttonFrame);
+                coverList = CreateButtons.SpawnButtonList(buttonFrame);
+
                 for (int i = 0; i < this.btnList.Count(); ++i)
                 {
-                    this.coverList[i].Click += new EventHandler(this.RevealClick);
+                    coverList[i].Click += new EventHandler(RevealClick);
                     this.Controls.Add(this.btnList[i]);
                     this.Controls.Add(this.coverList[i]);
-                    this.coverList[i].BringToFront();
-                    this.coverList[i].BackColor = Color.Gray;
+                    coverList[i].BringToFront();
+                    coverList[i].BackColor = Color.Gray;
                 }
 
-                SetButtonImagesRandomly.RandomizeImages(this.btnList);
+                SetButtonImagesRandomly.RandomizeImages(btnList);
 
                 //Start timer as late as possible
-                this.totalTimeTimer.Enabled = true;
+                totalTimeTimer.Enabled = true;
             }
             catch (Exception ex)
             {
@@ -270,21 +274,9 @@
         private void TotalTime_Tick(object sender, EventArgs e)
         {
             totalTime += .1;
-
-            // All values are calculated based off current level data
-            // Later it is added to gameInfo's values for a running total of data
+            
             // Score handled here in case somebody leaves a game before completing level
             this.score = Math.Floor((GameInfo.Instance.GetSize() - (totalClicks / (GameInfo.Instance.LevelPlus1 - Math.Floor(GameInfo.Instance.Level / 3d)))) * (revealed / 2) - totalTime);
-        }
-
-        /// <summary>
-        /// Updates gameInfo class values.
-        /// </summary>
-        private void UpdateInfo()
-        {
-            GameInfo.Instance.Score += this.score;
-            GameInfo.Instance.TotalClicks += this.totalClicks;
-            GameInfo.Instance.TotalTime += this.totalTime;
         }
 
         /// <summary>
@@ -295,7 +287,7 @@
         private void ExitForm(object sender, EventArgs e)
         {
             MessageBox.Show("Score: " + this.score.ToString() + ", Time: " + this.totalTime.ToString() + ", Clicks: " + this.totalClicks.ToString());
-            UpdateInfo();
+            UpdateInfo.UpdateGameInfo(score, totalClicks, totalTime);
                
             // If you beat the final level (there is one more picture than there is the level
             if (GameInfo.Instance.Level == (GameInfo.Instance.ImageList.Count() - 1) && GameInfo.Instance.LevelComplete == true)

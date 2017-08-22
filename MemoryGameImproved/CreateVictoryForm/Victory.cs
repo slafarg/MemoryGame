@@ -28,13 +28,15 @@
             this.BackgroundImage = Properties.Resources.testrisContainer;
             this.BackgroundImageLayout = ImageLayout.Stretch;
 
-            // Invisible exit button set equal to Esc, doesn't work create regular button to set cancelbutton
-            Button btnExit = new Button();
-            btnExit.Name = "btnExit";
+            // Invisible exit button set equal to Cancel Button
+            Button btnExit = new Button()
+            {
+                Name = "btnExit",
+                BackColor = Color.FromArgb(255, Color.White),
+                TabStop = false,
+                FlatStyle = FlatStyle.Flat
+            };
             btnExit.Click += new EventHandler(this.ExitForm);
-            btnExit.BackColor = Color.FromArgb(255, Color.White);
-            btnExit.TabStop = false;
-            btnExit.FlatStyle = FlatStyle.Flat;
             btnExit.FlatAppearance.BorderSize = 0;
             this.Controls.Add(btnExit);
             this.CancelButton = btnExit;
