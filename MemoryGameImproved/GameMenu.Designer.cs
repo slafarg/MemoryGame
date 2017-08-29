@@ -40,11 +40,9 @@
             this.lblPlayerID = new System.Windows.Forms.Label();
             this.lblDeveloper = new System.Windows.Forms.Label();
             this.picBoxOpening = new System.Windows.Forms.PictureBox();
-            this.gameDBDataSet = new MemoryGameImproved.MemoryGameDBDataSet();
-            this.gameLoginTableAdapter = new MemoryGameImproved.MemoryGameDBDataSetTableAdapters.LoginTableAdapter();
             this.btnContinue = new System.Windows.Forms.Button();
+            this.btnCreateLogin = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picBoxOpening)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gameDBDataSet)).BeginInit();
             this.SuspendLayout();
             // 
             // btnNewGame
@@ -83,14 +81,14 @@
             // 
             this.txtPassword.Location = new System.Drawing.Point(556, 277);
             this.txtPassword.Name = "txtPassword";
-            this.txtPassword.Size = new System.Drawing.Size(100, 20);
+            this.txtPassword.Size = new System.Drawing.Size(156, 20);
             this.txtPassword.TabIndex = 14;
             // 
             // txtPlayerID
             // 
             this.txtPlayerID.Location = new System.Drawing.Point(556, 233);
             this.txtPlayerID.Name = "txtPlayerID";
-            this.txtPlayerID.Size = new System.Drawing.Size(100, 20);
+            this.txtPlayerID.Size = new System.Drawing.Size(156, 20);
             this.txtPlayerID.TabIndex = 13;
             // 
             // lblPassword
@@ -138,15 +136,6 @@
             this.picBoxOpening.TabIndex = 10;
             this.picBoxOpening.TabStop = false;
             // 
-            // gameDBDataSet
-            // 
-            this.gameDBDataSet.DataSetName = "MemoryGameDBDataSet";
-            this.gameDBDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // gameLoginTableAdapter
-            // 
-            this.gameLoginTableAdapter.ClearBeforeFill = true;
-            // 
             // btnContinue
             // 
             this.btnContinue.Location = new System.Drawing.Point(556, 357);
@@ -158,12 +147,23 @@
             this.btnContinue.Visible = false;
             this.btnContinue.Click += new System.EventHandler(this.BtnContinue_Click);
             // 
+            // btnCreateLogin
+            // 
+            this.btnCreateLogin.Location = new System.Drawing.Point(637, 303);
+            this.btnCreateLogin.Name = "btnCreateLogin";
+            this.btnCreateLogin.Size = new System.Drawing.Size(75, 23);
+            this.btnCreateLogin.TabIndex = 19;
+            this.btnCreateLogin.Text = "Create Login";
+            this.btnCreateLogin.UseVisualStyleBackColor = true;
+            this.btnCreateLogin.Click += new System.EventHandler(this.BtnCreateLogin_Click);
+            // 
             // GameMenu
             // 
             this.AcceptButton = this.btnLogin;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(775, 498);
+            this.Controls.Add(this.btnCreateLogin);
             this.Controls.Add(this.btnNewGame);
             this.Controls.Add(this.btnContinue);
             this.Controls.Add(this.btnHighScores);
@@ -178,7 +178,6 @@
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Menu_Load);
             ((System.ComponentModel.ISupportInitialize)(this.picBoxOpening)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gameDBDataSet)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -195,9 +194,8 @@
         private System.Windows.Forms.Label lblPlayerID;
         private System.Windows.Forms.Label lblDeveloper;
         private System.Windows.Forms.PictureBox picBoxOpening;
-        private MemoryGameDBDataSet gameDBDataSet;
-        private MemoryGameDBDataSetTableAdapters.LoginTableAdapter gameLoginTableAdapter;
         private System.Windows.Forms.Button btnContinue;
+        private System.Windows.Forms.Button btnCreateLogin;
     }
 }
 

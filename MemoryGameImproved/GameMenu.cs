@@ -3,6 +3,8 @@
     using System;
     using System.Media;
     using System.Windows.Forms;
+    using MySql.Data.MySqlClient;
+    using DatabaseManagement;
 
     /// <summary>
     /// Game Menu.
@@ -13,6 +15,8 @@
         /// Background music.
         /// </summary>                   
         private SoundPlayer backgroundMusic = new SoundPlayer(Properties.Resources.tetrisBackground);
+
+        
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GameMenu"/> class.
@@ -36,7 +40,18 @@
         }
 
         /// <summary>
-        /// Accesses database for high-score information.
+        /// Brings up a login creation form.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnCreateLogin_Click(object sender, EventArgs e)
+        {
+            var newLogin = new CreateLoginMenu();
+            newLogin.ShowDialog();
+        }
+
+        /// <summary>
+        /// Accesses database for login information.
         /// </summary>
         /// <param name="sender">Button object</param>
         /// <param name="e">Empty event arguments</param>
@@ -44,31 +59,39 @@
         {
             if (this.txtPlayerID.Text != string.Empty && this.txtPassword.Text != string.Empty)
             {
-                // If statement checks to see if it pulls an unique row from the database. There cannot be more than 1.
-                if (this.gameLoginTableAdapter.ValidateLogin(this.gameDBDataSet.Login, this.txtPlayerID.Text, this.txtPassword.Text) != 1)
+                try
                 {
-                    MessageBox.Show("Invalid Login Credentials");
-                    this.txtPassword.Clear();
-                    this.txtPlayerID.Clear();
-                    this.txtPlayerID.Focus();
+                    // If statement checks to see if it pulls an unique row from the database. There cannot be more than 1.
+                    if (!Queries.ValidateLogin(this.txtPlayerID.Text, this.txtPassword.Text))
+                    {
+                        MessageBox.Show("Invalid Login Credentials");
+                        txtPassword.Clear();
+                        txtPlayerID.Clear();
+                        txtPlayerID.Focus();
+                    }
+                    else
+                    {
+                        // Saving valid playerID for scoreboard
+                        GameInfo.Instance.PlayerID = this.txtPlayerID.Text;
+
+                        // Removing visibility of login boxes
+                        lblPassword.Hide();
+                        lblPlayerID.Hide();
+                        txtPassword.Hide();
+                        txtPlayerID.Hide();
+                        btnLogin.Hide();
+                        btnCreateLogin.Hide();
+                        this.AcceptButton = btnNewGame;
+                        btnNewGame.Select();
+
+                        // Adding visibility of hidden buttons
+                        btnNewGame.Show();
+                        btnHighScores.Show();
+                    }
                 }
-                else
+                catch(Exception ex)
                 {
-                    // Saving valid playerID for scoreboard
-                    GameInfo.Instance.PlayerID = this.txtPlayerID.Text;
-
-                    // Removing visibility of login boxes
-                    this.lblPassword.Hide();
-                    this.lblPlayerID.Hide();
-                    this.txtPassword.Hide();
-                    this.txtPlayerID.Hide();
-                    this.btnLogin.Hide();
-                    this.AcceptButton = this.btnNewGame;
-                    this.btnNewGame.Select();
-
-                    // Adding visibility of hidden buttons
-                    this.btnNewGame.Show();
-                    this.btnHighScores.Show();
+                    MessageBox.Show(ex.Message);
                 }
             }
         }        

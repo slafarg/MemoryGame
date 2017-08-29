@@ -34,7 +34,9 @@
                 Name = "btnExit",
                 BackColor = Color.FromArgb(255, Color.White),
                 TabStop = false,
-                FlatStyle = FlatStyle.Flat
+                FlatStyle = FlatStyle.Flat,
+                Width = 1,
+                Height = 1
             };
             btnExit.Click += new EventHandler(this.ExitForm);
             btnExit.FlatAppearance.BorderSize = 0;
