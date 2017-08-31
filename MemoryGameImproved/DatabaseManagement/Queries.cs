@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
+using System.Data;
 
 namespace MemoryGameImproved.DatabaseManagement
 {
@@ -103,6 +104,40 @@ namespace MemoryGameImproved.DatabaseManagement
             {
                 throw new ArgumentException("password", "Password must have atleast 1 character, and have no more than 45 characters.");
             }
+        }
+
+        public static void InsertHighScore(int score, DateTime date, string playerId)
+        {
+            MySqlCommand cmd = new MySqlCommand
+            {
+                Connection = conn,
+                CommandText = "InsertHighScore",
+                CommandType = System.Data.CommandType.StoredProcedure
+            };
+            cmd.Parameters.AddWithValue("@score", score);
+            cmd.Parameters.AddWithValue("@gameDateTime", date);
+            cmd.Parameters.AddWithValue("@playerId", playerId);
+            conn.Open();
+
+            if (cmd.ExecuteNonQuery() < 1)
+            {
+                throw new Exception("Unable to insert highscore into database.");
+            }
+
+            conn.Close();
+        }
+
+        public static MySqlCommand GetHighScores()
+        {
+            //Can't return readers. Return information instead. Datatable
+            MySqlCommand cmd = new MySqlCommand
+            {
+                Connection = conn,
+                CommandText = "GetHighScores",
+                CommandType = System.Data.CommandType.StoredProcedure
+            };
+
+            return cmd;
         }
     }
 }

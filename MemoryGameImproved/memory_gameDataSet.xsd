@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="memory_gameDataSet" targetNamespace="http://tempuri.org/memory_gameDataSet.xsd" xmlns:mstns="http://tempuri.org/memory_gameDataSet.xsd" xmlns="http://tempuri.org/memory_gameDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" GeneratorFunctionsComponentClassName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" UserFunctionsComponentName="QueriesTableAdapter" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="memory_gameConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="memory_gameConnectionString (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.MemoryGameImproved.Properties.Settings.GlobalReference.Default.memory_gameConnectionString" Provider="MySql.Data.MySqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="highscoresTableAdapter" GeneratorDataComponentClassName="highscoresTableAdapter" Name="highscores" UserDataComponentName="highscoresTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="memory_gameConnectionString (Settings)" DbObjectName="memory_game.highscores" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT `MatchId`, `Score`, `GameDateTime`, `PlayerId` FROM `highscores`</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings />
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources>
+          <DbSource ConnectionRef="memory_gameConnectionString (Settings)" DbObjectName="`memory_game`.`GetHighScores`" DbObjectType="StoredProcedure" GenerateShortCommands="true" GeneratorSourceName="GetHighScores" MethodsParameterType="CLR" Modifier="Public" Name="GetHighScores" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="GetHighScores">
+            <SelectCommand>
+              <DbCommand CommandType="StoredProcedure" ModifiedByUser="false">
+                <CommandText>`memory_game`.`GetHighScores`</CommandText>
+                <Parameters />
+              </DbCommand>
+            </SelectCommand>
+          </DbSource>
+        </Sources>
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="memory_gameDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="memory_gameDataSet" msprop:Generator_UserDSName="memory_gameDataSet">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="highscores" msprop:Generator_TableClassName="highscoresDataTable" msprop:Generator_TableVarName="tablehighscores" msprop:Generator_TablePropName="highscores" msprop:Generator_RowDeletingName="highscoresRowDeleting" msprop:Generator_RowChangingName="highscoresRowChanging" msprop:Generator_RowEvHandlerName="highscoresRowChangeEventHandler" msprop:Generator_RowDeletedName="highscoresRowDeleted" msprop:Generator_UserTableName="highscores" msprop:Generator_RowChangedName="highscoresRowChanged" msprop:Generator_RowEvArgName="highscoresRowChangeEvent" msprop:Generator_RowClassName="highscoresRow">
+          <xs:complexType>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

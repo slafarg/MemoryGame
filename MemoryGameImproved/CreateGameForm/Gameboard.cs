@@ -286,28 +286,37 @@
         /// <param name="e">No event arguments</param>
         private void ExitForm(object sender, EventArgs e)
         {
-            MessageBox.Show("Score: " + this.score.ToString() + ", Time: " + this.totalTime.ToString() + ", Clicks: " + this.totalClicks.ToString());
-            UpdateInfo.UpdateGameInfo(score, totalClicks, totalTime);
-               
-            // If you beat the final level (there is one more picture than there is the level
-            if (GameInfo.Instance.Level == (GameInfo.Instance.ImageList.Count() - 1) && GameInfo.Instance.LevelComplete == true)
+
+            try
             {
-                // Create final score screen and update database
-                GameInfo.Instance.Reset();
-                this.Close();
+                MessageBox.Show("Score: " + this.score.ToString() + ", Time: " + this.totalTime.ToString() + ", Clicks: " + this.totalClicks.ToString());
+                UpdateInfo.UpdateGameInfo(score, totalClicks, totalTime);
+
+                // If you beat the final level (there is one more picture than there is the level
+                if (GameInfo.Instance.Level == (GameInfo.Instance.ImageList.Count() - 1) && GameInfo.Instance.LevelComplete == true)
+                {
+                    // Create final score screen and update database
+                    GameInfo.Instance.Reset();
+                    this.Close();
+                }
+                else if (GameInfo.Instance.LevelComplete == true)
+                {
+                    // If you beat a level that isn't the final level
+                    CreateVictoryForm.Victory victoryForm = new CreateVictoryForm.Victory();
+                    victoryForm.CreateVictoryBoard();
+                    victoryForm.ShowDialog();
+                    ++GameInfo.Instance.Level;
+                    this.Close();
+                }
+                else
+                {
+                    // Exiting prematurely
+                    this.Close();
+                }
             }
-            else if (GameInfo.Instance.LevelComplete == true)
+            catch(Exception ex)
             {
-                // If you beat a level that isn't the final level
-                CreateVictoryForm.Victory victoryForm = new CreateVictoryForm.Victory();
-                victoryForm.CreateVictoryBoard();
-                victoryForm.ShowDialog();
-                ++GameInfo.Instance.Level;
-                this.Close();
-            }
-            else
-            {
-                // Exiting prematurely
+                MessageBox.Show(ex.Message);
                 this.Close();
             }
         }        

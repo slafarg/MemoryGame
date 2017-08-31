@@ -95,11 +95,22 @@
       <DependentUpon>GameMenu.cs</DependentUpon>
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
+    <Compile Include="memory_gameDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>memory_gameDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
+    <Compile Include="ShowHighScores.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ShowHighScores.Designer.cs">
+      <DependentUpon>ShowHighScores.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="CreateLoginMenu.resx">
       <DependentUpon>CreateLoginMenu.cs</DependentUpon>
@@ -117,6 +128,20 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="ShowHighScores.resx">
+      <DependentUpon>ShowHighScores.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="memory_gameDataSet.xsc">
+      <DependentUpon>memory_gameDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="memory_gameDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>memory_gameDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="memory_gameDataSet.xss">
+      <DependentUpon>memory_gameDataSet.xsd</DependentUpon>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

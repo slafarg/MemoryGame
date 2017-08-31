@@ -24,6 +24,7 @@
         public GameMenu()
         {
             this.InitializeComponent();
+            this.ControlBox = false;
         }
 
         /// <summary>
@@ -105,9 +106,9 @@
         {
             // Reseting game
             GameInfo.Instance.Reset();
-            this.btnContinue.Show();
-            this.btnContinue.Select();
-            this.BtnContinue_Click(this, EventArgs.Empty);
+            btnContinue.Show();
+            btnContinue.Select();
+            BtnContinue_Click(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -117,7 +118,11 @@
         /// <param name="e">Empty event arguments</param>
         private void BtnHighScores_Click(object sender, EventArgs e)
         {
-            this.Close();
+            MessageBox.Show("Not yet implemented.");
+            /*
+            var highScoreForm = new ShowHighScores();
+            highScoreForm.Show();
+            */
         }
 
         /// <summary>
@@ -132,6 +137,22 @@
             attempt.CreateGameBoard();
             attempt.ShowDialog();
             this.btnContinue.Select();
+        }
+
+        private void BtnExit_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if(GameInfo.Instance.Score > 1)
+                {
+                    Queries.InsertHighScore((int)GameInfo.Instance.Score, DateTime.Now, GameInfo.Instance.PlayerID);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            this.Close();
         }
     }
 }

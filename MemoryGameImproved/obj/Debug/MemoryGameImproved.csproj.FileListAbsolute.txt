@@ -20,3 +20,4 @@ C:\VisualStudioProjects\Visual2015_Projects\MemoryGameImproved\MemoryGameImprove
 C:\VisualStudioProjects\Visual2015_Projects\MemoryGameImproved\MemoryGameImproved\bin\Debug\MySql.Data.dll
 C:\VisualStudioProjects\Visual2015_Projects\MemoryGameImproved\MemoryGameImproved\bin\Debug\MySql.Data.xml
 C:\VisualStudioProjects\Visual2015_Projects\MemoryGameImproved\MemoryGameImproved\obj\Debug\MemoryGameImproved.CreateLoginMenu.resources
+C:\VisualStudioProjects\Visual2015_Projects\MemoryGameImproved\MemoryGameImproved\obj\Debug\MemoryGameImproved.ShowHighScores.resources
