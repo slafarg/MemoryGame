@@ -9,7 +9,6 @@ namespace MemoryGameImproved
     {
         DataTable highscoreDataTable = new DataTable();
         BindingSource highscoreSource = new BindingSource();
-        DataGridView dataGridViewHighScores = new DataGridView();
         MySqlDataReader reader;
         MySqlConnection conn = DatabaseManagement.Connection.GetConnection();
 
@@ -22,12 +21,19 @@ namespace MemoryGameImproved
         {
             try
             {
-                dataGridViewHighScores.SetBounds(this.Location.X + 5, this.Location.Y + 5, (int)(this.Width * 0.8), (int)(this.Height * 0.8));
+                MySqlCommand cmd = DatabaseManagement.Queries.GetHighScores();
+                cmd.Connection = conn;
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+
                 conn.Open();
-                reader = DatabaseManagement.Queries.GetHighScores().ExecuteReader();
+                adapter.Fill(highscoreDataTable);
                 conn.Close();
-                highscoreDataTable.Load(reader);
                 dataGridViewHighScores.DataSource = highscoreDataTable;
+
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Error code: " + ex.ErrorCode + ", " + ex.Message);
             }
             catch (Exception ex)
             {

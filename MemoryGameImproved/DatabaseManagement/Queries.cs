@@ -129,10 +129,8 @@ namespace MemoryGameImproved.DatabaseManagement
 
         public static MySqlCommand GetHighScores()
         {
-            //Can't return readers. Return information instead. Datatable
             MySqlCommand cmd = new MySqlCommand
             {
-                Connection = conn,
                 CommandText = "GetHighScores",
                 CommandType = System.Data.CommandType.StoredProcedure
             };

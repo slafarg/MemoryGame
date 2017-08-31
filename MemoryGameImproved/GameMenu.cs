@@ -34,7 +34,7 @@
         /// <param name="e">Empty arguments</param>
         private void Menu_Load(object sender, EventArgs e)
         {
-            this.backgroundMusic.PlayLooping();
+           /////////////////////////////////// this.backgroundMusic.PlayLooping();
 
             // Set label parent to picture box containing gif to make it transparent.
             this.lblDeveloper.Parent = this.picBoxOpening;  
@@ -118,11 +118,9 @@
         /// <param name="e">Empty event arguments</param>
         private void BtnHighScores_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Not yet implemented.");
-            /*
             var highScoreForm = new ShowHighScores();
-            highScoreForm.Show();
-            */
+            highScoreForm.GetData();
+            highScoreForm.ShowDialog();
         }
 
         /// <summary>
