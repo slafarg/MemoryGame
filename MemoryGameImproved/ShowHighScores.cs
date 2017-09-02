@@ -9,27 +9,14 @@ namespace MemoryGameImproved
     {
         DataTable highscoreDataTable = new DataTable();
         BindingSource highscoreSource = new BindingSource();
-        MySqlDataReader reader;
-        MySqlConnection conn = DatabaseManagement.Connection.GetConnection();
 
         public ShowHighScores()
         {
-                InitializeComponent();
-        }
-
-        public void GetData()
-        {
             try
             {
-                MySqlCommand cmd = DatabaseManagement.Queries.GetHighScores();
-                cmd.Connection = conn;
-                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
-
-                conn.Open();
-                adapter.Fill(highscoreDataTable);
-                conn.Close();
+                InitializeComponent();
+                highscoreDataTable = DatabaseManagement.Queries.GetHighScores();
                 dataGridViewHighScores.DataSource = highscoreDataTable;
-
             }
             catch (MySqlException ex)
             {

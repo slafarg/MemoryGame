@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using System.Data;
 
@@ -127,15 +124,23 @@ namespace MemoryGameImproved.DatabaseManagement
             conn.Close();
         }
 
-        public static MySqlCommand GetHighScores()
+        public static DataTable GetHighScores()
         {
+            DataTable data = new DataTable();
+            MySqlDataReader reader;
             MySqlCommand cmd = new MySqlCommand
             {
+                Connection = conn,
                 CommandText = "GetHighScores",
                 CommandType = System.Data.CommandType.StoredProcedure
             };
 
-            return cmd;
+            conn.Open();
+            reader = cmd.ExecuteReader();
+            data.Load(reader);
+            conn.Close();
+
+            return data;
         }
     }
 }

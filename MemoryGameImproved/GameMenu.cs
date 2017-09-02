@@ -34,7 +34,7 @@
         /// <param name="e">Empty arguments</param>
         private void Menu_Load(object sender, EventArgs e)
         {
-           /////////////////////////////////// this.backgroundMusic.PlayLooping();
+            backgroundMusic.PlayLooping();
 
             // Set label parent to picture box containing gif to make it transparent.
             this.lblDeveloper.Parent = this.picBoxOpening;  
@@ -119,7 +119,6 @@
         private void BtnHighScores_Click(object sender, EventArgs e)
         {
             var highScoreForm = new ShowHighScores();
-            highScoreForm.GetData();
             highScoreForm.ShowDialog();
         }
 
