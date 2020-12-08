@@ -20,7 +20,7 @@ namespace MemoryGameImproved.DatabaseManagement
                 {
                     Connection = conn,
                     CommandText = "ValidateLogin",
-                    CommandType = System.Data.CommandType.StoredProcedure
+                    CommandType = CommandType.StoredProcedure
                 };
                 cmd.Parameters.AddWithValue("@userName", username);
                 cmd.Parameters.AddWithValue("@userPassword", password);
@@ -54,7 +54,7 @@ namespace MemoryGameImproved.DatabaseManagement
                 {
                     Connection = conn,
                     CommandText = "InsertLogin",
-                    CommandType = System.Data.CommandType.StoredProcedure
+                    CommandType = CommandType.StoredProcedure
                 };
                 cmd.Parameters.AddWithValue("@userName", username);
                 cmd.Parameters.AddWithValue("@userPassword", password);
@@ -91,7 +91,7 @@ namespace MemoryGameImproved.DatabaseManagement
             //Numbers correlate with constraints in MySQL database.
             if (name.Length > 10 || name.Length < 1)
             {
-                throw new ArgumentOutOfRangeException("username", "Username must be between atleast 1 character and no more than 10 characters long.");
+                throw new ArgumentException("username", "Username must be between atleast 1 character and no more than 10 characters long.");
             }
             else if (!name.All(x => char.IsLetterOrDigit(x) || x.Equals('_')))
             {
@@ -109,7 +109,7 @@ namespace MemoryGameImproved.DatabaseManagement
             {
                 Connection = conn,
                 CommandText = "InsertHighScore",
-                CommandType = System.Data.CommandType.StoredProcedure
+                CommandType = CommandType.StoredProcedure
             };
             cmd.Parameters.AddWithValue("@score", score);
             cmd.Parameters.AddWithValue("@gameDateTime", date);
@@ -132,7 +132,7 @@ namespace MemoryGameImproved.DatabaseManagement
             {
                 Connection = conn,
                 CommandText = "GetHighScores",
-                CommandType = System.Data.CommandType.StoredProcedure
+                CommandType = CommandType.StoredProcedure
             };
 
             conn.Open();

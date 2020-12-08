@@ -10,19 +10,8 @@
     /// </summary>
     public partial class GameInfo
     {
-        private static GameInfo instance;
-        public static GameInfo Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = new GameInfo();
-                }
-
-                return instance;
-            }
-        }
+        private static GameInfo _instance;
+        
 
         /// <summary>
         /// Level for controlling amount of pairs.
@@ -34,36 +23,51 @@
         /// </summary>
         private bool _oddLevel;
 
+        private int _levelPlus1;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="GameInfo"/> class. 
         /// </summary>
         public GameInfo()
         {
             ImageList = new List<Image>();
-            this.TotalTime = 0;
-            this.TotalClicks = 0;
-            this.Score = 0;
-            this.Level = 1;
-            this.LevelComplete = false;
+            TotalTime = 0;
+            TotalClicks = 0;
+            Score = 0;
+            //Level sets _oddLevel and _levelPlus1
+            Level = 1;
+            LevelComplete = false;
 
             // Add an image to add another level. No other work needed
             // Load Images
-            this.ImageList.Add(Properties.Resources.blueTetris);
-            this.ImageList.Add(Properties.Resources.greenTetris);
-            this.ImageList.Add(Properties.Resources.redTetris);
-            this.ImageList.Add(Properties.Resources.yellowTetris);
-            this.ImageList.Add(Properties.Resources.orangeTetris);
-            this.ImageList.Add(Properties.Resources.purpleTetris);
-            this.ImageList.Add(Properties.Resources.turquoiseTetris);
+            ImageList.Add(Properties.Resources.blueTetris);
+            ImageList.Add(Properties.Resources.greenTetris);
+            ImageList.Add(Properties.Resources.redTetris);
+            ImageList.Add(Properties.Resources.yellowTetris);
+            ImageList.Add(Properties.Resources.orangeTetris);
+            ImageList.Add(Properties.Resources.purpleTetris);
+            ImageList.Add(Properties.Resources.turquoiseTetris);
 
             for (int i = 1; i <= this.ImageList.Count(); ++i)
             {
                 // Setting Tag property to identify similar pictures
-                this.ImageList[i - 1].Tag = i.ToString();
+                ImageList[i - 1].Tag = i.ToString();
             }
         }
 
-        #region Get Sets
+        public static GameInfo Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new GameInfo();
+                }
+
+                return _instance;
+            }
+        }
+
         /// <summary>
         /// Gets or sets time.
         /// </summary>
@@ -99,21 +103,23 @@
         {
             get
             {
-                return this._level;
+                return _level;
             }
 
             set
             {
-                this._level = value;
-                if (this.LevelPlus1 % 2 == 0)
+                _level = value;
+                _levelPlus1 = _level + 1;
+
+                if (LevelPlus1 % 2 == 0)
                 {
                     // Even squares level
-                    this._oddLevel = false;
+                    _oddLevel = false;
                 }
                 else
                 {
                     // Odd amount for squares
-                    this._oddLevel = true;
+                    _oddLevel = true;
                 }
             }
         }
@@ -125,7 +131,18 @@
         {
             get
             {
-                return this._level + 1;
+                return _levelPlus1;
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the level will have an odd size, thus unable to pair all images.
+        /// </summary>
+        public bool OddLevel
+        {
+            get
+            {
+                return _oddLevel;
             }
         }
 
@@ -136,17 +153,6 @@
         {
             get;
             set;
-        }
-
-        /// <summary>
-        /// Gets a value indicating whether the level will have an odd size, thus unable to pair all images.
-        /// </summary>
-        public bool OddLevel
-        {
-            get
-            {
-                return this._oddLevel;
-            }
         }
 
         /// <summary>
@@ -167,17 +173,16 @@
             get;
             set;
         }        
-        #endregion
              
         /// <summary>
         /// Reset variables to a fresh game.
         /// </summary>                   
         public void Reset()
         {
-            this.TotalTime = this.TotalClicks = 0;
-            this.Score = 0;
-            this.Level = 1;
-            this.LevelComplete = false;
+            TotalTime = this.TotalClicks = 0;
+            Score = 0;
+            Level = 1;
+            LevelComplete = false;
         }
         
         /// <summary>
@@ -187,13 +192,13 @@
         public int GetSize()
         {
             int size;
-            if (this.OddLevel)
+            if (OddLevel)
             {
-                size = (int)Math.Pow(this.LevelPlus1, 2) + this.LevelPlus1;
+                size = (int)Math.Pow(LevelPlus1, 2) + LevelPlus1;
             }
             else
             {
-                size = (int)Math.Pow(this.LevelPlus1, 2);
+                size = (int)Math.Pow(LevelPlus1, 2);
             }
 
             return size;
